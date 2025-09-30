@@ -29,17 +29,7 @@ jobs:
           git commit -m "docs: update README activity log [skip ci] - Closes #1" || echo "No changes"
 
       - name: Pull latest changes
-        run: |
-          git pull origin main --rebase
+        run: git pull origin main --rebase
 
       - name: Push changes
         run: git push origin main
-
-      - name: Move issue card to Done
-        uses: peter-evans/project-card-move@v1
-        with:
-          project-url: https://github.com/haolillian/devops-readme-auto-update/projects/1
-          card-id: ${{ secrets.PROJECT_CARD_ID }}
-          column-name: "Done"
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
