@@ -2,8 +2,8 @@ name: Update README Activity
 
 on:
   workflow_dispatch:   # 手動觸發
-  # schedule:
-  #   - cron: "0 9 * * *"  # 每天早上 9 點跑一次
+  schedule:
+    - cron: "0 9 * * *"  # 每天早上 9 點自動執行
 
 permissions:
   contents: write
@@ -26,7 +26,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "docs: update activity log [skip ci]" || echo "No changes"
+          git commit -m "docs: update README activity log [skip ci] - Closes #1" || echo "No changes"
 
       - name: Pull latest changes
         run: |
@@ -34,3 +34,12 @@ jobs:
 
       - name: Push changes
         run: git push origin main
+
+      - name: Move issue card to Done
+        uses: peter-evans/project-card-move@v1
+        with:
+          project-url: https://github.com/haolillian/devops-readme-auto-update/projects/1
+          card-id: ${{ secrets.PROJECT_CARD_ID }}
+          column-name: "Done"
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
