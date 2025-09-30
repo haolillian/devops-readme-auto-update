@@ -19,6 +19,7 @@ jobs:
       - name: Update activity in README
         uses: TheDanniCraft/activity-log@v1
         with:
+          GITHUB_USERNAME: "haolillian"
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
       - name: Commit changes
