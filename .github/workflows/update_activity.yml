@@ -25,19 +25,9 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-readme || git checkout update-readme
           git add README.md
-          git commit -m "docs: update README activity log [skip ci] - Closes #1" || echo "No changes"
+          git commit -m "docs: update README activity log [skip ci]" || echo "No changes"
 
-      - name: Pull latest changes
-        run: git pull origin main --rebase
-
-      - name: Push changes
-        run: git push origin main
-
-      - name: Commit changes
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "docs: force update activity log [skip ci]" --allow-empty
-          git push origin main
+      - name: Push changes to new branch
+        run: git push origin update-readme --force
